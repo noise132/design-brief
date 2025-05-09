@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // References to DOM elements
   const dropdownContainers = document.querySelectorAll('.dropdown-container');
   const copyButton = document.getElementById('copy-button');
+  const resetButton = document.getElementById('reset-button');
   const resultPreview = document.getElementById('result-preview');
   const toast = document.getElementById('toast');
   
@@ -75,7 +76,10 @@ document.addEventListener('DOMContentLoaded', function() {
       chip.innerHTML = `
         ${option.text}
         <span class="chip-remove" data-id="${option.id}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
         </span>
       `;
       selectedOptionsContainer.appendChild(chip);
@@ -134,6 +138,28 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }).catch(function(err) {
       console.error('Could not copy text: ', err);
+    });
+  });
+
+  // Reset button functionality
+  resetButton.addEventListener('click', function() {
+    // Clear all checkboxes
+    document.querySelectorAll('.option input').forEach(checkbox => {
+      checkbox.checked = false;
+    });
+
+    // Clear selected options
+    for (const key in selectedOptions) {
+      selectedOptions[key] = [];
+      updateSelectedOptionsUI(key);
+    }
+
+    // Clear result preview
+    updateResultPreview();
+
+    // Close all dropdowns
+    dropdownContainers.forEach(container => {
+      container.classList.remove('open');
     });
   });
 });
