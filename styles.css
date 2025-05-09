@@ -242,3 +242,9 @@ button svg {
   font-size: 0.875rem;
   color: hsl(var(--muted-foreground));
 }
+
+.reset-button {
+  margin-top: 1rem;
+  background-color: hsl(var(--destructive));
+  color: hsl(var(--destructive-foreground));
+}
